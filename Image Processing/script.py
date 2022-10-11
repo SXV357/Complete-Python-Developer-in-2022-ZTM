@@ -19,20 +19,30 @@ img_arr = [r"C:\Users\14058\OneDrive\Desktop\Programming\Python Stuff\Image Proc
 #     grayscale_img = img.convert("L")
 #     grayscale_img.show()
 
-new_img = Image.open(r"C:\Users\14058\OneDrive\Desktop\Programming\Python Stuff\Image Processing\Pokedex\pikachu.jpg")
-grayed = new_img.convert("L")
-smoothen = grayed.filter(ImageFilter.SMOOTH)
-rotated = smoothen.rotate(180)
-# rotated.save("final.png", "png")
+# new_img = Image.open(r"C:\Users\14058\OneDrive\Desktop\Programming\Python Stuff\Image Processing\Pokedex\pikachu.jpg")
+# grayed = new_img.convert("L")
+# smoothen = grayed.filter(ImageFilter.SMOOTH)
+# rotated = smoothen.rotate(180)
+# # rotated.save("final.png", "png")
 
-print(rotated.size)
-resized = rotated.resize((500, 500)) # resize method accepts tuple
-resized.save("resize.png", "png")
-print(resized.format, resized.size)
+# print(rotated.size)
+# resized = rotated.resize((500, 500)) # resize method accepts tuple
+# resized.save("resize.png", "png")
+# print(resized.format, resized.size)
 
-#cropping
-crop_box = (125, 200, 320, 320)
-cropped = resized.crop(crop_box)
-cropped.save("cropped.png", "png")
-cropped.show()
+# #cropping
+# crop_box = (125, 200, 320, 320)
+# cropped = resized.crop(crop_box)
+# cropped.save("cropped.png", "png")
+# cropped.show()
+
+astro = Image.open(r"C:\Users\14058\OneDrive\Desktop\Programming\Python Stuff\Image Processing\Images\astro.jpg")
+print(astro.size)
+# thumbnail = astro.resize((1280, 720))
+# thumbnail.save("resized_astro.png", "png")
+# print(thumbnail.size)
+
+# to maintain aspect ratio
+astro.thumbnail((1280, 720))
+astro.save("thumbnail.jpg")
 
