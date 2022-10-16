@@ -1,6 +1,11 @@
 import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+pw = os.environ.get("email_pw")
 
 email = EmailMessage()
 email['from'] = 'Shreyas Viswanathan'
@@ -12,4 +17,4 @@ email.set_content('Hello from the Python ZTM course!')
 with smtplib.SMTP(host = 'smtp.gmail.com', port = 587) as smtp :
     smtp.ehlo() # server startup message
     smtp.starttls() # encryption mechanism
-    smtp.login("shrevis2018@gmail.com", "")
+    smtp.login("shrevis2018@gmail.com", pw)
