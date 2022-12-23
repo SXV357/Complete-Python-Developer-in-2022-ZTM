@@ -4,8 +4,7 @@ import sys
 
 
 def request_api_data(query_char):
-    url = 'https://api.pwnedpasswords.com/range/' + \
-        query_char  # represents 1st 5 digits of hash
+    url = 'https://api.pwnedpasswords.com/range/' + query_char  # represents 1st 5 digits of hash
     res = requests.get(url)
     if res.status_code != 200:
         raise RuntimeError(
