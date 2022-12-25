@@ -119,7 +119,68 @@ def prefix(arr):
         print('Type mismatch exception')
         raise err
 
+#11
+def find_lengths(array):
+    res = []
+    for i in range(len(array)):
+        res.append(len(array[i]))
+    return res
 
-print(prefix([('ca', ('cat', 'car', 'fear', 'center'))]))
-print(prefix([('do', ('cat', 'dog', 'shatter', 'donut', 'at', 'todo'))]
-             ))
+#12
+def longest_string(array):
+    longest = " "
+    max_len = len(array[0])
+    for j in range(len(array)):
+        if len(array[j]) > max_len:
+            max_len = len(array[j])
+            longest = array[j]
+    return longest
+
+#13
+def number_string(n):
+    new_string = ""
+    for i in range(0, n + 1):
+        new_string += str(i) + " "
+    return new_string
+
+#14
+
+# input --> [   ([],[],[]) ,  target   ]
+# return indices of target in one of the sub-arrays
+
+# array[0] = tuple of sub-arrays
+# array[1] = target
+
+def ragged_matrix(arr):
+    res = []
+    for i in range(len(arr[0])):
+        for j in range(len(arr[0][i])):
+            if arr[0][i][j] == arr[1]:
+                res.append([i, j])
+    return res
+
+#15
+def split(string):
+    res = []
+    if ' ' in string:
+        res = string.split()
+    elif ',' in string:
+        res = string.split(',')
+    else:
+      res.append(string[1])
+      res.append(string[3])
+    return res 
+
+#16
+def check_monotonic(arr):
+    res = ""
+    for i in range(len(arr) - 1):
+        if arr[i + 1] > arr[i]:
+            res = "Increasing"
+        elif (not arr[i + 1] > arr[i]) and (abs(arr[i + 1] - arr[i]) != 1):
+            res = "Not a monotonic sequence"
+        elif (not arr[i + 1] > arr[i]) and (abs(arr[i + 1] - arr[i]) == 1):
+            res = "Decreasing"
+    return res
+
+
