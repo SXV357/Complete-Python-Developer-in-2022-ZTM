@@ -1,3 +1,5 @@
+import random
+
 # 1
 def count_occurrences(array):
     count_nineteen = 0
@@ -183,4 +185,130 @@ def check_monotonic(arr):
             res = "Decreasing"
     return res
 
+#17
+def separated(array):
+    res = []
+    for i in range(len(array)):
+        split_arr = array[i].split(" ")
+        if len(split_arr) > 1:
+            res.append(True)
+        else:
+            res.append(False)
+    return res
+
+#18
+def calc_ascii_sum(string):
+    sum = 0
+    for i in range(len(string)):
+        if string[i].isupper():
+            sum += ord(string[i])
+    return sum
+
+#19
+
+# nums[i + 1] < nums[i]
+
+def detect_drops(array):
+    res = []
+    for i in range(0, len(array) - 1):
+        if array[i + 1] < array[i]:
+            res.append(i + 1)
+    return res
+
+#20
+
+# 1st element is max of first 1 element(s), 2nd element is max of first 2 elements ...
+# get length of input array
+
+# for i  in range(len(array)):
+    # 1st element in res --> array[0]
+    # 2nd element in res --> max(array[0:2])
+    # 3rd element in res --> max(array[0:3])
+    # 4th element in res --> max(array[0:4])
+    # 5th element in res --> max(array[0:5])
+    # 6th element in res --> max(array[0:len(array)])
+
+def calculate_max(array: list) -> list:
+    res = []
+    res.append(array[0])
+    for i in range(2, len(array)):
+        elements = array[0:i]
+        res.append(max(elements))
+    return res
+
+#21 --> Pending
+def calc_XOR(arr):
+    return "0b" + str((int(arr[0]) ^ int(arr[1])))
+
+print(calc_XOR(['0001', '1011'])) # Works
+print(calc_XOR(['100011101100001', '100101100101110'])) # Doesn't work
+
+#21
+
+def find_largest(array):
+    maximum_number = 0.0
+    for i in range(len(array)):
+        split_string = array[i].split(",")
+        if len(split_string) > 1:
+            array[i] = str(split_string[0]) + "." + str(split_string[1])
+        if float(array[i]) > maximum_number:
+            maximum_number = float(array[i])
+    return maximum_number
+
+#22
+def most_unique(arr):
+    unique_strings = []
+    for i in range(len(arr)):
+        for j in range(len(arr[i]) - 1):
+            if arr[i][j + 1] != arr[i][j]:
+                unique_strings.append(arr[i])
+    return random.choice(unique_strings)
+
+#23
+def sum_to_zero(array):
+    indices = []
+    for i in range(len(array)):
+        for j in range(len(array) - 1):
+            if (array[i] + array[j]) == 0:
+                indices.append([i,j])
+    return indices[0]
+
+#24
+def fewer_total_chars(arr):
+    chars_first = 0
+    chars_second = 0
+    for i in range(len(arr[0])):
+        chars_first += len(arr[0][i])
+    for j in range(len(arr[1])):
+        chars_second += len(arr[1][j])
+    if chars_first > chars_second:
+        return arr[1]
+    elif chars_second > chars_first:
+        return arr[0]
+    return arr    
+
+#25
+def find_upper_vowel(string):
+    res = []
+    for i in range(0, len(string), 2):
+        if string[i] == 'A' or string[i] == 'E' or string[i] == 'I' or string[i] == 'O' or string[i] == 'U':
+            res.append(i)
+    return res
+
+#26
+
+def has_three_digs(n):
+    digits = 0
+    for i in range(len(n)):
+        if n[i].isnumeric():
+            digits = digits + 1
+    return digits == 3
+
+
+def find_k_sum(arr, k):
+    sum = 0
+    for i in range(0, k):
+        if has_three_digs(str(arr[i])):
+            sum += arr[i]
+    return sum
 
