@@ -14,8 +14,6 @@ def count_occurrences(array):
     return False
 
 # 2
-
-
 def length_and_occurrences(arr):
     first_five = arr[:5]
     fifth_elem = first_five[-1]
@@ -28,8 +26,6 @@ def length_and_occurrences(arr):
     return False
 
 # 3
-
-
 def calculate_piles(n):
     arr = []
     end = (n-1) * 2
@@ -46,8 +42,6 @@ def differs_by_ten(array):
     return False
 
 # 5
-
-
 def sum(array):
     sum = 0
     for i in range(len(array)):
@@ -57,8 +51,6 @@ def sum(array):
     return False
 
 # 6
-
-
 def split(string):
     entire_list = []
     separator_list = []
@@ -70,8 +62,6 @@ def split(string):
     return entire_list
 
 # 7
-
-
 def distinct(array):
     count_one = array.count(1)
     count_two = array.count(2)
@@ -83,8 +73,6 @@ def distinct(array):
     return False
 
 # 8
-
-
 def threshold(li, thresh):
     indices = []
     for index, value in enumerate(li):
@@ -93,8 +81,6 @@ def threshold(li, thresh):
     return indices.sort()
 
 # 9
-
-
 def is_palindrome(li):
     res = []
     for i in range(len(li)):
@@ -105,10 +91,6 @@ def is_palindrome(li):
     return res
 
 # 10
-
-# input --> [  (   prefix, (value1, value2, value3)    )   ]
-
-
 def prefix(arr):
     accessor = arr[0][1]
     try:
@@ -146,13 +128,6 @@ def number_string(n):
     return new_string
 
 #14
-
-# input --> [   ([],[],[]) ,  target   ]
-# return indices of target in one of the sub-arrays
-
-# array[0] = tuple of sub-arrays
-# array[1] = target
-
 def ragged_matrix(arr):
     res = []
     for i in range(len(arr[0])):
@@ -206,8 +181,6 @@ def calc_ascii_sum(string):
 
 #19
 
-# nums[i + 1] < nums[i]
-
 def detect_drops(array):
     res = []
     for i in range(0, len(array) - 1):
@@ -216,17 +189,6 @@ def detect_drops(array):
     return res
 
 #20
-
-# 1st element is max of first 1 element(s), 2nd element is max of first 2 elements ...
-# get length of input array
-
-# for i  in range(len(array)):
-    # 1st element in res --> array[0]
-    # 2nd element in res --> max(array[0:2])
-    # 3rd element in res --> max(array[0:3])
-    # 4th element in res --> max(array[0:4])
-    # 5th element in res --> max(array[0:5])
-    # 6th element in res --> max(array[0:len(array)])
 
 def calculate_max(array: list) -> list:
     res = []
@@ -240,11 +202,7 @@ def calculate_max(array: list) -> list:
 def calc_XOR(arr):
     return "0b" + str((int(arr[0]) ^ int(arr[1])))
 
-print(calc_XOR(['0001', '1011'])) # Works
-print(calc_XOR(['100011101100001', '100101100101110'])) # Doesn't work
-
 #21
-
 def find_largest(array):
     maximum_number = 0.0
     for i in range(len(array)):
@@ -296,7 +254,6 @@ def find_upper_vowel(string):
     return res
 
 #26
-
 def has_three_digs(n):
     digits = 0
     for i in range(len(n)):
