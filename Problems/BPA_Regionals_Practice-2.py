@@ -125,3 +125,90 @@ def n_consonants(string, n):
         if consonant_counter == n:
             res.append(split_string[i])
     return res
+
+#10
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def hex_is_prime(string):
+    res = []
+    for i in range(len(string)):
+        if string[i].isnumeric():
+            if is_prime(int(string[i])):
+                res.append(True)
+            else:
+                res.append(False)
+        else:
+            if is_prime(ord(string[i])):
+                res.append(True)
+            else:
+                res.append(False)
+    return res
+
+#11
+def even_palindromes(n):
+    res = []
+    for i in range(n):
+        if str(i) == str(i)[::-1] and i % 2 == 0:
+            res.append(i)
+    return res
+
+#12
+def sum_negative(n):
+    sum = 0
+    string_version = str(n)
+    concatenated = string_version[0] + string_version[1]
+    sum += int(concatenated)
+    for i in range(2, len(string_version)):
+        sum += int(string_version[i])
+    return sum
+
+def sum_greater_than_zero(arr):
+    res = []
+    for i in range(len(arr)):
+        if str(arr[i])[0] == "-":
+            if sum_negative(str(arr[i])) > 0:
+                res.append(int(str(arr[i])))
+        else:
+            if sum_digits(arr[i]) > 0:
+                res.append(arr[i])
+    return res
+
+#13
+def decreasing_indices(arr):
+    res = []
+    for i in range(len(arr) - 1):
+        if arr[i + 1] > arr[i]:
+            continue
+        else:
+            res.append([i, i + 1])
+            break
+    return res
+
+#14
+
+# count of item in the array should be equal to the number itself
+# Ex: if 5 is in the array and is occurring 5 times, return 5 since it is +ve and satisfies the condition
+
+def h_index(arr):
+    arr.sort()
+    for i in range(len(arr) - 1, -1, -1):
+        if arr[i] > 0 and arr.count(arr[i]) == arr[i]:
+            return arr[i]
+    return -1
+
+#15
+def even_length(arr):
+    even = []
+    dictionary = {}
+    for i in range(len(arr)):
+        if len(arr[i]) % 2 == 0:
+            even.append(arr[i])
+    for j in range(len(even)):
+        dictionary[j] = even[j]
+    return list(sorted(dictionary.values(), key = lambda item: len(item)))
