@@ -58,3 +58,68 @@ def odd_first_and_last(arr):
             if int(greater_length[j][0]) and int(greater_length[j][-1]) % 2 != 0:
                 res.append(int(greater_length[j]))
     return res
+
+#6
+def exponent(a, n):
+    count = 0
+    while int(n) >= a:
+        count += 1
+        n /= a
+    return count
+
+#7
+def product_magnitude(arr):
+    product = 1
+    for i in range(len(arr)):
+        product *= arr[i]
+    sum = 0
+    for j in range(len(arr)):
+        sum += abs(arr[j])
+    if len(str(product)) > 1:
+        string_sum = str(sum)
+        string_sum = "-" + string_sum
+        sum = int(string_sum)
+    return sum
+
+#8
+def biggest_even(m, n):
+    evens = [i for i in range(m, n) if i % 2 == 0]
+    return max(evens)
+
+#9
+def valid_filename(arr):
+    accepted = ['txt', 'exe', 'jpg', 'png', 'dll']
+    res = []
+    for i in range(len(arr)):
+        digit_count = 0
+        split_file = arr[i].split(".")
+        for j in range(len(split_file[0])):
+            if split_file[0][j].isdigit():
+                digit_count += 1
+        if arr[i].count('.') == 1 and digit_count <= 3 and split_file[1] in accepted:
+            res.append('Yes')
+        else:
+            res.append('No')
+    return res
+
+#10
+def is_prime(n):
+    if n == 0 or n == 1:
+        return False
+    else:
+        for i in range(2, (int(n ** 0.5)) + 1):
+            if n % i == 0:
+                return False
+    return True
+
+def adjacent_prime(arr):
+    res = []
+    if is_prime(arr[1]):
+        res.append(arr[0])
+    if is_prime(arr[-2]):
+        res.append(arr[-1])
+    for i in range(1, len(arr) - 1):
+        if is_prime(arr[i - 1]) or is_prime(arr[i + 1]):
+            res.append(arr[i])
+    remove_duplicates(res)
+    return sorted(res)
