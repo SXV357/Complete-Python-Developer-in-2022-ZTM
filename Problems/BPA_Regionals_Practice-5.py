@@ -1,3 +1,6 @@
+from random import shuffle
+import math
+
 #1
 def matching_parentheses(string):
     res = [-1] * len(string)
@@ -83,3 +86,138 @@ def is_valid_substring(string):
                  if any(char == "[" for char in substring):
                     res.append(substring)
     return res
+
+#4
+def product_primes(n):
+    res = []
+    values = list(range(n))
+    primes = [i for i in range(2, n) if all(i % j != 0 for j in range(2, i))]
+    for value in values:
+        for i in primes:
+            for j in primes:
+                for k in primes:
+                    if i * j * k == value:
+                        res.append([i, j, k])
+    return res
+
+#5
+def total_appetite(arr):
+    res = []
+    for array in arr:
+        sum = 0
+        difference = 0
+        sum += array[0] + array[1]
+        difference = abs(array[-1] - sum)
+        res.append([sum, difference])
+    return res
+
+#6
+def n_digits(n):
+    res = []
+    for i in range(1000):
+        string_version = str(i)
+        digits = list(string_version)
+        if (len(string_version) == n) and (digits[0] == "2" or digits[-1] == "2"):
+            res.append(int(string_version))
+    return res
+
+#7
+def manipulate_array(arr):
+    res = []
+    odd_indices = [arr[item] for item in range(len(arr)) if item % 2 != 0]
+    updated_list = [val for val in arr if val not in odd_indices]
+    updated_list.sort()
+    # If odd_indices and updated_list have same length
+    if len(odd_indices) == len(updated_list):
+        matched_vals = list(zip(updated_list,odd_indices))
+        for i in range(len(matched_vals)):
+            for j in range(len(matched_vals[i])):
+                res.append(matched_vals[i][j])
+    else:
+        # Where len(odd) > len(updated)
+        if len(odd_indices) > len(updated_list):
+            match1 = list(zip(updated_list, odd_indices))
+            for i in range(len(match1)):
+                for j in range(len(match1[i])):
+                    res.append(match1[i][j])
+            res.append(odd_indices[-1])
+        # Where len(updated) > len(odd)
+        elif len(updated_list) > len(odd_indices):
+            match2 = list(zip(updated_list, odd_indices))
+            for i in range(len(match2)):
+                for j in range(len(match2[i])):
+                    res.append(match2[i][j])
+            res.append(updated_list[-1])
+    return res
+
+#8
+def closest_palindrome(string):
+    combinations = []
+    lower = string.lower()
+    res = ""
+    chars = [chr(i) for i in range(97, 123)]
+    for i in range(len(lower)):
+        for j in range(len(chars)):
+            modified_string = string.replace(lower[i], chars[j])
+            combinations.append(modified_string)
+    for combination in combinations:
+        if combination == combination[::-1]:
+            res = combination
+    return res
+
+#9
+def matching_parentheses(i, j, string):
+    for idx, char in enumerate(string):
+        if char == "(":
+            count = 0
+            for k in range(idx + 1, len(string)):
+                if string[k] == "(":
+                    count += 1
+                elif string[k] == ")":
+                    if count == 0:
+                        if i == idx and j == k:
+                            return True
+                    else:
+                        count -= 1
+    return False
+
+def matched_whitespace(string):
+    modified = string.replace(" ", "")
+    opening = []
+    closing = []
+    for idx, chr in enumerate(modified):
+        if chr == "(":
+            opening.append(idx)
+        elif chr == ")":
+            closing.append(idx)
+    opening.sort()
+    closing.sort()
+    res = []
+    for i in opening:
+        for j in closing:
+            if j > i and matching_parentheses(i, j, modified):
+                substring = modified[i:j+ 1]
+                res.append(substring)
+                break
+    return list(set(res))
+
+#10
+def modify_palindrome(string, length):
+    combinations = []
+    shuffled = []
+    extra = length - len(string)
+    chars = list(string)
+    for i in range(len(chars)):
+        combinations.append(string + (extra * chars[i]))
+    for combination in combinations:
+        letters = list(combination)
+        for k in range(math.factorial(len(letters))):
+            shuffle(letters)
+            shuffled.append(''.join(letters))
+    res = ""
+    for j in range(len(shuffled)):
+        word = shuffled[j]
+        if word == word[::-1]:
+            res = word
+            return res
+    return "A palindrome cannot be constructed with given length from given string"
