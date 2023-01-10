@@ -1,3 +1,5 @@
+from random import choice
+
 #1
 def sort_singles(arr):
     singles = []
@@ -51,3 +53,22 @@ def parentheses_depth(string):
         else:
             res.append(int((len(parentheses[i]) - len(")()(")) / 2))
     return res
+
+#4
+def target_string(string):
+   string_without_hyphen = string.replace("-", " ")
+   modified = string_without_hyphen.replace("_", " ")
+   return modified
+
+#5
+def four_sum(n):
+    res = []
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                for l in range(n):
+                    if i + j + k + l == n:
+                        res.append([i, j, k, l])
+    return choice(res)
+
+print(four_sum(100))
