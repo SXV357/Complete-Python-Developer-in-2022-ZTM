@@ -53,11 +53,9 @@ def minion_game(string):
 
 #2
 
-# String --> Length(n)
-# k = factor of n
-# Number of substrings possible = n / k(If length = 9 and k = 3, 3 substrings of length 3 possible)
-# String = "AAB CAA ADA"
-          # 012 345 678
+# Notes:
+    # --> Outer loop can go until k while inner loop can go through each substring in the main string
+    # --> Depending on whether each character in the substring has been added before to a result array, we can keep adding and return it at the end
 def merge_the_tools(string, k):
     length = len(string)
     possible_substrings = []
