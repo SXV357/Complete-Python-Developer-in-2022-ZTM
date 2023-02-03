@@ -1,4 +1,6 @@
 import random
+import math
+import sys
 
 #1
 # Notes:
@@ -81,5 +83,33 @@ def merge_the_tools(string, k):
         res += ''.join(val) + "\n"
     return res
 
-print(merge_the_tools("AAABCADDE", 3))
+#3
+def find_angle(AB, BC):
+    s3 = math.sqrt(math.pow(AB, 2) + math.pow(BC, 2))
+    opposite, hypotenuse = s3 / 2, BC
+    return round(math.degrees(math.asin(opposite / hypotenuse)))
+
+#4
+def disjoint_sets():
+    total_happiness = 0
+    length, numSets, arr, s1, s2 = sys.argv[1], sys.argv[2], sys.argv[3:6], sys.argv[6:8], sys.argv[8:10]
+    for item in s1:
+        if item in arr:
+            total_happiness += 1
+    for item in s2:
+            total_happiness -= 1
+    return total_happiness
+
+#5
+def distinct_words():
+    num_words = int(input())
+    words = []
+    w1, w2, w3, w4 = str(input()), str(input()), str(input()), str(input())
+    words.extend([w1,w2,w3,w4])
+    non_duplicates = list(set(words))
+    word_count = [str(words.count(i)) for i in non_duplicates]
+    formatted_count = ' '.join(word_count)
+    return str(len(non_duplicates)) + "\n" + formatted_count
+
+print(distinct_words())
 
