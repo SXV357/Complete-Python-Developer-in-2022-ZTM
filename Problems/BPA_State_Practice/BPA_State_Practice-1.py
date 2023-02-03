@@ -1,14 +1,12 @@
 import random
 
 #1
-
 # Notes:
     # --> Each person's score can be calculated using the given algorithm:
         # [len(string) - (number of permutations that be formed with a letter starting at index i)]
         # Example: if index == 1 == "A", there are 5 different permutations that can be formed:
             # "A", "AN", "ANA", "ANAN", "ANANA" (6 - 1 = 5 = total permutations possible)
             # repeat this for each letter depending on whether it's a consonant or vowel
-
 def minion_game(string):
     vowels = ['a', 'e', 'i', 'o', 'u']
     consonants = [chr(i) for i in range(97, 123) if chr(i) not in vowels]
@@ -53,6 +51,37 @@ def minion_game(string):
             break
     return res
 
-if __name__ == '__main__':
-    s = input()
-    print(minion_game(s))
+#2
+
+# String --> Length(n)
+# k = factor of n
+# Number of substrings possible = n / k(If length = 9 and k = 3, 3 substrings of length 3 possible)
+# String = "AAB CAA ADA"
+          # 012 345 678
+def merge_the_tools(string, k):
+    length = len(string)
+    possible_substrings = []
+    for i in range(0, length, k):
+        substring = string[i:i+3]
+        possible_substrings.append(substring)
+    subsequences = [list(j) for j in possible_substrings]
+    for x in range(len(subsequences)):
+        for y in range(len(subsequences[x]) - 1):
+            if subsequences[x].count(subsequences[x][y]) > 1 and subsequences[x][y + 1] == subsequences[x][y]:
+                subsequences[x].remove(subsequences[x][y])
+                break
+            elif subsequences[x][y + 1] != subsequences[x][y] and subsequences[x][-1] == subsequences[x][y]:
+                subsequences[x].pop(-1)
+                break
+            elif subsequences[x][y] == subsequences[x][y + 1] and subsequences[x][y] == subsequences[x][-1]:
+                element = subsequences[x][0]
+                subsequences[x].clear()
+                subsequences[x][0] = element
+                break
+    res = ""
+    for val in subsequences:
+        res += ''.join(val) + "\n"
+    return res
+
+print(merge_the_tools("AAABCADDE", 3))
+
