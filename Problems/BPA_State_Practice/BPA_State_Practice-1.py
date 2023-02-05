@@ -1,6 +1,7 @@
 import random
 import math
 import sys
+from itertools import groupby
 
 #1
 # Notes:
@@ -83,20 +84,21 @@ def merge_the_tools(string, k):
         res += ''.join(val) + "\n"
     return res
 
-#3
+#3 + #4
 def find_angle(AB, BC):
     s3 = math.sqrt(math.pow(AB, 2) + math.pow(BC, 2))
     opposite, hypotenuse = s3 / 2, BC
     return round(math.degrees(math.asin(opposite / hypotenuse)))
 
-#4
 def disjoint_sets():
     total_happiness = 0
-    length, numSets, arr, s1, s2 = sys.argv[1], sys.argv[2], sys.argv[3:6], sys.argv[6:8], sys.argv[8:10]
-    for item in s1:
-        if item in arr:
+    length, numSets = sys.argv[1], sys.argv[2]
+    arr, s1, s2 = str(input()), str(input()), str(input())
+    for item in list(s1):
+        if item in list(arr):
             total_happiness += 1
-    for item in s2:
+    for item in list(s2):
+        if item in list(arr):
             total_happiness -= 1
     return total_happiness
 
@@ -111,5 +113,57 @@ def distinct_words():
     formatted_count = ' '.join(word_count)
     return str(len(non_duplicates)) + "\n" + formatted_count
 
-print(distinct_words())
+#6
+def string_compression():
+    input_string = str(input())
+    mappings = [list(g) for key, g in groupby(input_string)]
+    compression = [(len(mapping), int(mapping[0])) for mapping in mappings]
+    res = ""
+    for value in compression:
+        res += str(value) + " "
+    return res
 
+#7
+def company_logo(string: str):
+    mappings = {}
+    chars = list(set(list(string)))
+    for char in chars:
+        mappings[char] = string.count(char)
+    pairs = []
+    for key, value in mappings.items():
+        pairs.append((key, value))
+    # pairs = sorted(pairs, key = lambda x: x[1], reverse = True)
+    most_frequent_1 = []
+    most_frequent_2 = []
+    # Case 1: Three items in pairs have idx[1] > 1
+    for item in range(len(pairs)):
+        if pairs[item][1] > 1:
+            most_frequent_1.append(pairs[item])
+    if len(most_frequent_1) == 3:
+        descending = sorted(most_frequent_1, key = lambda x: x[1], reverse= True)
+        for i in range(len(descending) - 1):
+            if descending[i][1] == descending[i + 1][i]:
+                if ord(descending[i][0]) > ord(descending[i + 1][0]):
+                    descending[i], descending[i + 1] = descending[i + 1], descending[i]
+        res = ""
+        for pair in descending:
+            res += str(pair) + "\n"
+        return res
+    # Case 2: Less than three items in pairs have idx[1] > 1
+    for item in range(len(pairs)):
+        if pairs[item][1] > 1:
+            most_frequent_2.append(pairs[item])
+        # Sub case 1: If there's only 2 items that have idx[1] > 1
+    if len(most_frequent_2) == 2:
+        remaining = [pair for pair in pairs if pair[1] == 1]
+        most_frequent_2.extend([random.choice(remaining)])
+        return most_frequent_2
+        # Sub case 2: If there's only 1 item that has idx[1] > 1
+    elif len(most_frequent_2) == 1:
+        remaining = [pair for pair in pairs if pair[1] == 1]
+        for k in range(2):
+            most_frequent_2.extend([random.choice(remaining)])
+        return most_frequent_2
+    return -1
+
+# print(company_logo('aabbbccde'))
