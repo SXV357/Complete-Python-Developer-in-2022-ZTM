@@ -124,6 +124,12 @@ def string_compression():
     return res
 
 #7
+
+# Notes:
+    # --> Need to sort count in descending order but chars in alphabetical order
+    # --> sorted(dictionary, key = lambda x: -x[1], x[0])
+    # This will sort all pairs in ascending order with respect to chars and descending order w respect to nums
+
 def company_logo(string: str):
     mappings = {}
     chars = list(set(list(string)))
@@ -157,13 +163,72 @@ def company_logo(string: str):
     if len(most_frequent_2) == 2:
         remaining = [pair for pair in pairs if pair[1] == 1]
         most_frequent_2.extend([random.choice(remaining)])
-        return most_frequent_2
+        rearranged = sorted(most_frequent_2, key = lambda x: x[1], reverse= True)
+        for j in range(len(rearranged) - 1):
+            if rearranged[j][1] == rearranged[j + 1][1]:
+                if ord(rearranged[j][0]) < ord(rearranged[j + 1][0]):
+                    return rearranged
+                else:
+                    rearranged[j], rearranged[j + 1] = rearranged[j + 1], rearranged[j]
+        res = ""
+        for pair in rearranged:
+            res += str(pair) + "\n"
+        return res
         # Sub case 2: If there's only 1 item that has idx[1] > 1
     elif len(most_frequent_2) == 1:
         remaining = [pair for pair in pairs if pair[1] == 1]
         for k in range(2):
             most_frequent_2.extend([random.choice(remaining)])
-        return most_frequent_2
+        rearranged_modified = sorted(most_frequent_2, key = lambda x: x[1], reverse= True)
+        for z in range(len(rearranged_modified) - 1):
+            if rearranged_modified[z][1] == rearranged_modified[z + 1][1]:
+                if ord(rearranged_modified[z][0]) < ord(rearranged_modified[z+ 1][0]):
+                    return rearranged_modified
+                else:
+                    rearranged_modified[z], rearranged_modified[z + 1] = rearranged_modified[z+ 1], rearranged_modified[z]
+        res = ""
+        for pair in rearranged_modified:
+            res += str(pair) + "\n"
+        return res
     return -1
 
-# print(company_logo('aabbbccde'))
+#8
+def n_cubes(blocks):
+    # Case 1: Odd length
+    if (len(blocks)) % 2 != 0:
+        middle = blocks[len(blocks) // 2]
+        half_one = blocks[0:len(blocks) // 2]
+        half_two = blocks[(len(blocks) // 2) + 1: len(blocks)]
+        res = []
+        for i in range(len(half_one)):
+            for j in range(len(half_two) - 1, -1, -1):
+                res.append(half_two[j])
+                res.append(half_one[i])
+                i += 1
+                j -= 1
+            break
+        res.append(middle)
+        if res[2] > res[0]:
+            return "No"
+        else:
+            return "Yes"
+    # Case 2: Even length
+    else:
+        mid = len(blocks) // 2
+        half_one = blocks[0: mid]
+        half_two = blocks[mid:len(blocks)]
+        res = []
+        for x in range(len(half_one)):
+            for y in range(len(half_two) - 1, -1, -1):
+                res.append(half_two[y])
+                res.append(half_one[x])
+                x += 1
+                y -= 1
+            break
+        if res[2] > res[0]:
+            return "No"
+        else:
+            return "Yes"
+    return -1
+
+print(n_cubes([4,3,2,1,3,4]))
