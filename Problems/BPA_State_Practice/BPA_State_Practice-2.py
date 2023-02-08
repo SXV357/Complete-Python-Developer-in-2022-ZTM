@@ -62,7 +62,7 @@ class Complex(object):
             result = "%.2f-%.2fi" % (self.real, abs(self.imaginary))
         return result
 
-if __name__ == '__main__':
+def run_complex():
     c = map(float, input().split())
     d = map(float, input().split())
     x = Complex(*c) # unpack all the values in the input
@@ -70,3 +70,58 @@ if __name__ == '__main__':
     print(*map(str, [x+y, x-y, x*y, x/y, x.mod(), y.mod()]), sep='\n')
     # calling the class' __str__ method on each of the operations
     # *map calls the string method on all the given pairs and what operation is performed
+
+#3
+
+# n = Num athletes = 5
+# m = Num attributes = 3(rank, age, height)
+# arr = [[], [], [], [], []] --> each subarray contains the attributes for each athlete
+# k = what attribute to sort based on
+
+def sort_athletes(n, m, arr, k):
+    modified = sorted(arr, key = lambda x: x[k])
+    for i in range(len(modified)):
+        for j in range(len(modified[i])):
+            modified[i][j] = str(modified[i][j])
+    for sub_arr in modified:
+        print(' '.join(sub_arr), end = "\n")
+
+def run_sort_athletes():
+    nm = input().split()
+    n = int(nm[0])
+    m = int(nm[1])
+    arr = []
+    for _ in range(n):
+        arr.append(list(map(int, input().rstrip().split())))
+    k = int(input())
+    sort_athletes(n, m, arr, k)
+
+#4
+
+#Conditions
+    # All sorted lowercase letters are ahead of uppercase letters.
+    # All sorted uppercase letters are ahead of digits.
+    # All sorted odd digits are ahead of sorted even digits.
+
+def sort_string():
+    string = str(input())
+    letters = []
+    upper_case = []
+    digits = []
+    for i in range(len(string)):
+        if string[i].isalpha():
+            if not string[i].isupper():
+                letters.append(string[i])
+            else:
+                upper_case.append(string[i])
+        elif string[i].isdigit():
+            digits.append(string[i])
+    modified_lower = sorted(letters, key = lambda x: ord(x), reverse=False)
+    modified_upper = sorted(upper_case, key = lambda y: ord(y), reverse = False)
+    sorted_odd = sorted([str(int(val)) for val in digits if int(val) % 2 != 0])
+    sorted_even = sorted([str(int(val)) for val in digits if int(val) % 2 == 0])
+    joined_letters = ''.join(modified_lower) + ''.join(modified_upper)
+    joined_nums = ''.join(sorted_odd) + ''.join(sorted_even)
+    print(joined_letters + joined_nums)
+
+sort_string()
