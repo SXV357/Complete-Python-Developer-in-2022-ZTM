@@ -1,5 +1,7 @@
-#1
+from fractions import Fraction
+from functools import reduce
 
+#1
 # Notes
     # --> 1 x 1 = 1
     # --> 11 x 11 = 121
@@ -124,4 +126,62 @@ def sort_string():
     joined_nums = ''.join(sorted_odd) + ''.join(sorted_even)
     print(joined_letters + joined_nums)
 
-sort_string()
+# sort_string()
+
+#5
+def validate_email(string):
+    if "@" in string and "." in string and string[string.index(".") + 1:len(string)]:
+        rate = string.index("@")
+        period = string.index(".")
+        username = string[0:rate]
+        website = string[rate + 1:period]
+        extension = string[period + 1:len(string)]
+        lower_case = [str(chr(i)) for i in range(97, 123)]
+        upper_case = [str(j).upper() for j in lower_case]
+        nums = [str(val) for val in range(0, 10)]
+        symbols = ["-", "_"]
+        res1 = False
+        for x in range(len(username)):
+            if username[x] in lower_case or username[x] in upper_case or username[x] in nums or username[x] in symbols:
+                res1 = True
+            else:
+                res1 = False
+        res2 = False
+        for y in range(len(website)):
+            if website[y] in lower_case or website[y] in upper_case or website[y] in nums:
+                res2 = True
+            else:
+                res2 = False
+        res3 = False
+        for z in range(len(extension)):
+            if extension[z] in lower_case or extension[z] in upper_case:
+                res3 = True
+            else:
+                res3 = False
+        return res1 and res2 and res3 and len(extension) == 3
+    else:
+        return False
+
+def filter_mail(emails):
+    return list(filter(validate_email, emails))
+
+def run_email_filtering():
+    n = int(input())
+    emails = []
+    for _ in range(n):
+        emails.append(input())
+    filtered_emails = filter_mail(emails)
+    filtered_emails.sort()
+    print(filtered_emails)
+
+#6
+def product(fracs):
+    t = Fraction(reduce(lambda x, y: x * y, fracs))
+    return t.numerator, t.denominator
+
+if __name__ == '__main__':
+    fracs = []
+    for _ in range(int(input())):
+        fracs.append(Fraction(*map(int, input().split())))
+    result = product(fracs)
+    print(*result)
