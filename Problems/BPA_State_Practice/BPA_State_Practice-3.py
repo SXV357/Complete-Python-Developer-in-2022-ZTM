@@ -93,7 +93,7 @@ def credit_card_validation(string):
     else:
         return "Invalid"
 
-if __name__ == "__main__":
+def card_validation_tester():
     numCards = int(input())
     cards = []
     for i in range(numCards):
@@ -101,3 +101,54 @@ if __name__ == "__main__":
         cards.append(card)
     for val in cards:
         print(credit_card_validation(val))
+
+#3
+def score_words(words):
+    vowels = ["a", "e", "i", "o", "u", "y"]
+    total_score = 0
+    for i in range(len(words)):
+        vowelCount = 0
+        for j in range(len(words[i])):
+            if words[i][j] in vowels:
+                vowelCount += 1
+        if vowelCount % 2 == 0:
+            total_score += 2
+        else:
+            total_score += 1
+    return total_score
+
+def score_words_tester():
+    numWords = int(input())
+    words = []
+    for _ in range(numWords):
+        words.append("_")
+    words = list(map(str, input().split()))
+    print(score_words(words))
+
+#4
+def print_from_stream(n, stream):
+    odds = [val for val in range(1,11) if val % 2 != 0]
+    evens = [val for val in range(11) if val % 2 == 0]
+    if stream == "even":
+        for i in range(n):
+            print(evens[i], end = "\n")
+    elif stream == "odd":
+        for i in range(n):
+            print(odds[i], end = "\n")
+
+if __name__ == "__main__":
+    queries = int(input())
+    cases = []
+    for _ in range(queries):
+        pair = list(map(str, input().split()))
+        cases.append(pair)
+    for i in range(len(cases)):
+        for j in range(len(cases[i]) - 1):
+            cases[i][j], cases[i][j + 1] = cases[i][j + 1], cases[i][j]
+    for x in range(len(cases)):
+        for _ in range(len(cases[x])):
+            print_from_stream(int(cases[x][0]), cases[x][1])
+            break
+
+
+
