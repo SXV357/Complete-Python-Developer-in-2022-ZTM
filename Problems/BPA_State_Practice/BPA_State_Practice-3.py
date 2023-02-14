@@ -136,7 +136,7 @@ def print_from_stream(n, stream):
         for i in range(n):
             print(odds[i], end = "\n")
 
-if __name__ == "__main__":
+def stream_tester():
     queries = int(input())
     cases = []
     for _ in range(queries):
@@ -150,5 +150,40 @@ if __name__ == "__main__":
             print_from_stream(int(cases[x][0]), cases[x][1])
             break
 
+#5
 
+# strs = ["flower", "flow", "flight"]
 
+def longestCommonPrefix(strs):
+    res = []
+    for i in range(len(strs)):
+        res.append(list(strs[i]))
+    modified = sorted(res, key = lambda x: len(x), reverse = True)[0]
+    for val in range(len(res)):
+        if len(res[val]) < len(modified):
+            for j in range(len(res[val]) + 1, len(modified) + 1):
+                res[val].append("_")
+    common = []
+    remaining = res[1:len(res)]
+    x = 0
+    z = 0
+    while x < len(res[0]):
+        letter = res[0][x]
+        first = []
+        for y in range(len(remaining)):
+            while z < len(remaining[y]):
+                first.append(remaining[y][z])
+                break
+            if len(first) == len(remaining):
+                if all(first):
+                    if first[0] == letter:
+                        common.append(first[0])
+                        x += 1
+                        z += 1
+                        break
+                    else:
+                        return ""
+    prefix = ''.join(common)
+    return prefix
+
+print(longestCommonPrefix(["flower","flow","flight"]))
