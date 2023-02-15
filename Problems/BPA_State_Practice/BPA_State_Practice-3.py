@@ -152,7 +152,14 @@ def stream_tester():
 
 #5
 
-# strs = ["flower", "flow", "flight"]
+# Notes:
+    # General Approach
+    # If the array is sorted, then each string is sorted alphabetically
+    # Then, the characters at the corresponding indices in first and last strings can be compared
+    # If they're the same, means that everything in middle also has that char at idx = 0
+    # That can be appended to another list and continue looping until the characters don't match
+    # When they don't match, there is no guarantee that everything in the middle also has the same one at the same index
+    # Would return an "" in such a case
 
 def longestCommonPrefix(strs):
     res = []
@@ -185,5 +192,3 @@ def longestCommonPrefix(strs):
                         return ""
     prefix = ''.join(common)
     return prefix
-
-print(longestCommonPrefix(["flower","flow","flight"]))
