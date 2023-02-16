@@ -55,4 +55,49 @@ class ThreeSumClosest():
 
 #2
 def letterCombinations(digits: str):
-    pass   
+    mappings = {
+        "2": "abc",
+        "3": "def",
+        "4": "ghi",
+        "5": "jkl",
+        "6": "mno",
+        "7": "pqrs",
+        "8": "tuv",
+        "9": "wxyz"
+    } 
+    if digits == "":
+        return []
+    elif len(digits) == 1 and digits in mappings.keys():
+        return list(mappings[digits])
+    elif len(digits) > 1 and len(digits) == 2:
+        vals = list(digits)
+        alphas = []
+        for val in vals:
+            alphas.append(list(mappings[val]))
+        res = []
+        remaining = alphas[1:]
+        start = alphas[0]
+        for i in range(len(start)):
+            letter = start[i]
+            for j in range(len(remaining)):
+                for k in range(len(remaining[j])):
+                    res.append(letter + remaining[j][k])
+        return res
+    elif len(digits) > 2:
+        vals = list(digits)
+        alphas = []
+        for val in vals:
+            alphas.append(list(mappings[val]))
+        res = []
+        start, end = alphas[0], alphas[-1]
+        remaining = alphas[1:-1]
+        for i in range(len(start)):
+            letter = start[i]
+            for j in range(len(remaining)):
+                for k in range(len(remaining[j])):
+                    for l in range(len(end)):
+                        res.append(letter + remaining[j][k] + end[l])
+        return res
+    return -1
+
+print(letterCombinations("234"))
