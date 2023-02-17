@@ -69,7 +69,7 @@ def letterCombinations(digits: str):
         return []
     elif len(digits) == 1 and digits in mappings.keys():
         return list(mappings[digits])
-    elif len(digits) > 1 and len(digits) == 2:
+    elif len(digits) == 2:
         vals = list(digits)
         alphas = []
         for val in vals:
@@ -83,7 +83,7 @@ def letterCombinations(digits: str):
                 for k in range(len(remaining[j])):
                     res.append(letter + remaining[j][k])
         return res
-    elif len(digits) > 2:
+    elif len(digits) == 3:
         vals = list(digits)
         alphas = []
         for val in vals:
@@ -98,6 +98,50 @@ def letterCombinations(digits: str):
                     for l in range(len(end)):
                         res.append(letter + remaining[j][k] + end[l])
         return res
-    return -1
+    elif len(digits) == 4:
+        vals = list(digits)
+        alphas = []
+        for val in vals:
+            alphas.append(list(mappings[val]))
+        res = []
+        if all(alphas):
+            remaining = alphas[2:]
+            pairs = []
+            for i in range(len(remaining[0])):
+                for j in range(len(remaining[1])):
+                    pairs.append(remaining[0][i] + remaining[1][j])
+            for x in range(len(alphas[0])):
+                for y in range(len(alphas[1])):
+                    for pair in pairs:
+                        res.append(alphas[0][x] + alphas[1][y] + pair)
+            return res
+        elif len(alphas[2]) == 4:
+            start, end = alphas[0], alphas[-1]
+            middle = alphas[1:-1]
+            middle_pairs = []
+            for i in range(len(middle[0])):
+                letter = middle[0][i]
+                for j in range(len(middle[1])):
+                    middle_pairs.append(letter + middle[1][j])
+            if len(start) == len(end):
+                for x in range(len(start)):
+                    start_val = start[x]
+                    for pair in middle_pairs:
+                        for y in range(len(end)):
+                            res.append(start_val + pair + end[y])
+            return res
+        elif len(alphas[2]) == 3 and len(alphas[3]) == 4:
+            first, second = alphas[0], alphas[1]
+            remaining = alphas[2:]
+            remaining_pairs = []
+            for i in range(len(remaining[0])):
+                for j in range(len(remaining[1])):
+                    remaining_pairs.append(remaining[0][i] + remaining[1][j])
+            for x in range(len(first)):
+                for y in range(len(second)):
+                    for pair in remaining_pairs:
+                        res.append(first[x] + second[y] + pair)
+            return res
+    return []
 
-print(letterCombinations("234"))
+print(letterCombinations("8888"))
