@@ -144,4 +144,98 @@ def letterCombinations(digits: str):
             return res
     return []
 
-print(letterCombinations("8888"))
+#3
+class ValidParentheses():
+    # Original Non-Working Approach
+    def isValid1(s: str):
+        numOpening = 0
+        numClosing = 0
+        for i in s:
+            if i == "(" or i == "[" or i == "{":
+                numOpening += 1
+            else:
+                numClosing += 1
+        internal_count = 0
+        similarity_score = 0
+        for i in range(len(list(s)) - 1):
+            if list(s)[i] == list(s)[i+1]:
+                similarity_score += 1
+        pairs = []
+        if s in ["{", "[", "(", ")", "}", "]"] or similarity_score == len(list(s)) - 1:
+            return False
+        non_matched_count = 0
+        for j, char in enumerate(s):
+            if char == "(":
+                counter = 0
+                for k in range(j + 1, len(s)):
+                    if s[k] == "(":
+                        counter += 1
+                    elif s[k] == ")":
+                        if counter == 0:
+                            internal_count += 1
+                            pairs.append((s[j:k+1]))
+                            break
+                        else:
+                            counter -= 1
+                    elif k == len(s) - 1 and s[k] != ")":
+                        non_matched_count += 1
+            elif char == "[":
+                counter = 0
+                for k in range(j + 1, len(s)):
+                    if s[k] == "[":
+                        counter += 1
+                    elif s[k] == "]":
+                        if counter == 0:
+                            internal_count += 1
+                            pairs.append((s[j:k+1]))
+                            break
+                        else:
+                            counter -= 1  
+                    elif k == len(s) - 1 and s[k] != "]":
+                        non_matched_count += 1
+            elif char == "{":
+                counter = 0
+                for k in range(j + 1, len(s)):
+                    if s[k] == "{":
+                        counter += 1
+                    elif s[k] == "}":
+                        if counter == 0:
+                            internal_count += 1
+                            pairs.append((s[j:k+1]))
+                            break
+                        else:
+                            counter -= 1
+                    elif k == len(s) - 1 and s[k] != "}":
+                        non_matched_count += 1
+        match = True
+        if len(pairs[0]) == 3:
+            for x in range(len(pairs)):
+                for y in range(len(pairs[x])):
+                        if pairs[x][0] == "(" and pairs[x][2] == ")" and pairs[x][1] in ["{", "[", "(", ")", "}", "]"]:
+                            match = False
+                        elif pairs[x][0] == "[" and pairs[x][2] == "]" and pairs[x][1] in ["{", "[", "(", ")", "}", "]"]:
+                            match = False
+                        elif pairs[x][0] == "{" and pairs[x][2] == "}" and pairs[x][1] in ["{", "[", "(", ")", "}", "]"]:
+                            match = False
+        return match and internal_count == numClosing and non_matched_count == 0
+    
+    # Ideal solution using stacks
+    def isValid2(s: str):
+        stack = []
+        mappings = {
+            "}": "{",
+            "]": "[",
+            ")": "("
+        }
+        if len(s) == 1:
+            return False
+        for char in s:
+            if char in mappings.keys():
+                if stack and stack[-1] == mappings[char]:
+                    stack.pop()
+                else:
+                    stack.append(char)
+            else:
+                stack.append(char)
+        return True if len(stack) == 0 else False
+
