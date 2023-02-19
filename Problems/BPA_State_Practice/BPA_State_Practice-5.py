@@ -1,3 +1,5 @@
+import itertools
+
 #1 + # 2
 def removeDuplicates(nums):
     # This solution works but creates a new array in memory and doesn't modify in-place
@@ -16,19 +18,23 @@ def strStr(haystack: str, needle: str):
 
 #3
 def nextPermutation(nums):
-    permutations = []
-    for i in range(len(nums)):
-        current = nums[i]
-        remaining = [val for val in nums]
-        remaining.remove(current)
-        permutations.append([current] + remaining)
-        permutations.append([current] + remaining[::-1])
-    modified = sorted([list(x) for x in set(tuple(element) for element in permutations)])
-    currentIndex = modified.index(nums)
-    if currentIndex == len(modified) - 1:
-        nums[:] = sorted(nums)
-    elif currentIndex != len(modified) - 1:
-        nums[:] = modified[currentIndex + 1]
-    return permutations
+    if len(nums) > 1:
+        counter = 0
+        for i in range(len(nums) - 1):
+            if nums[i] == nums[i + 1]:
+                counter += 1
+        if counter == len(nums) - 1:
+            nums[:] = nums
+        else:
+            permutations = list(itertools.permutations(nums))
+            modified = sorted(list(set(permutations)))
+            currentIndex = modified.index(tuple(nums))
+            if currentIndex and currentIndex == len(modified) - 1:
+                nums[:] = sorted(nums)
+            elif modified[currentIndex + 1]:
+                nums[:] = modified[currentIndex + 1]
+    else:
+        nums[:] = nums
+    return nums
 
-print(nextPermutation([5,4,7,5,3,2]))
+print(nextPermutation([6,7,5,3,5,6,2,9,1,2,7,0,9]))
