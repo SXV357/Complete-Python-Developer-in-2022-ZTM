@@ -105,5 +105,24 @@ class NextPermutation:
         nums[pointer + 1:] = reversed(nums[pointer + 1:])
         return nums
 
-print(NextPermutation.permutationPointer([3,2,1]))
+#4
 
+# Notes: Use 2-pointers(One at start and one at end and search if they equal target)
+
+def searchRange(nums, target):
+    if target in nums:
+        if len(nums) == 1:
+            return 2 * [0]
+        elif len(nums) > 1:
+            p1, p2 = 0, len(nums) - 1
+            while p1 <= p2:
+                if nums[p1] == target and nums[p2] == target:
+                    return [p1, p2]
+                if nums[p1] == target and nums[p2] != target:
+                    p2 -= 1
+                elif nums[p1] != target and nums[p2] == target:
+                    p1 += 1
+                else:
+                    p1 += 1
+                    p2 -= 1
+    return [-1,-1]
