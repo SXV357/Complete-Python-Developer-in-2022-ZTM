@@ -147,70 +147,16 @@ def isValid(row: list[str]):
     return True
 
 def generateSubArrays(board: list[list[str]]):
-    sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8, sub9 = [], [], [], [], [], [], [], [], []
-    for r in range(3):
-        res = []
-        for c in range(3):
-            res.append(board[r][c])
-            if c == 2:
-                sub1.append(res)
-                break
-    for r in range(3):
-        res = []
-        for c in range(3, 6):
-            res.append(board[r][c])
-            if c == 5:
-                sub2.append(res)
-                break
-    for r in range(3):
-        res = []
-        for c in range(6,9):
-            res.append(board[r][c])
-            if c == 8:
-                sub3.append(res)
-                break
-    for r in range(3,6):
-        res = []
-        for c in range(3):
-            res.append(board[r][c])
-            if c == 2:
-                sub4.append(res)
-                break
-    for r in range(3,6):
-        res = []
-        for c in range(3,6):
-            res.append(board[r][c])
-            if c == 5:
-                sub5.append(res)
-                break
-    for r in range(3,6):
-        res = []
-        for c in range(6,9):
-            res.append(board[r][c])
-            if c == 8:
-                sub6.append(res)
-                break
-    for r in range(6,9):
-        res = []
-        for c in range(3):
-            res.append(board[r][c])
-            if c == 2:
-                sub7.append(res)
-                break
-    for r in range(6,9):
-        res = []
-        for c in range(3,6):
-            res.append(board[r][c])
-            if c == 5:
-                sub8.append(res)
-                break
-    for r in range(6,9):
-        res = []
-        for c in range(6,9):
-            res.append(board[r][c])
-            if c == 8:
-                sub9.append(res)
-                break
+    sub1 = [board[r][c] for r in range(3) for c in range(3) if c == 2 or sub1.append([board[r][c]])]
+    sub2 = [board[r][c] for r in range(3) for c in range(3,6) if c == 5 or sub2.append([board[r][c]])]
+    sub3 = [board[r][c] for r in range(3) for c in range(6,9) if c == 8 or sub3.append([board[r][c]])]
+    sub4 = [board[r][c] for r in range(3,6) for c in range(3) if c == 2 or sub4.append([board[r][c]])]
+    sub5 = [board[r][c] for r in range(3,6) for c in range(3,6) if c == 5 or sub5.append([board[r][c]])]
+    sub6 = [board[r][c] for r in range(3,6) for c in range(6,9) if c == 8 or sub6.append([board[r][c]])]
+    sub7 = [board[r][c] for r in range(6,9) for c in range(3) if c == 2 or sub7.append([board[r][c]])]
+    sub8 = [board[r][c] for r in range(6,9) for c in range(3,6) if c == 5 or sub8.append([board[r][c]])]
+    sub9 = [board[r][c] for r in range(6,9) for c in range(6,9) if c == 8 or sub9.append([board[r][c]])]
+
     modified = [list(collections.Counter([i for i in sorted(sub1[0] + sub1[1] + sub1[2]) if i.isdigit()]).values()),
                 list(collections.Counter([i for i in sorted(sub2[0] + sub2[1] + sub2[2]) if i.isdigit()]).values()),
                 list(collections.Counter([i for i in sorted(sub3[0] + sub3[1] + sub3[2]) if i.isdigit()]).values()),
