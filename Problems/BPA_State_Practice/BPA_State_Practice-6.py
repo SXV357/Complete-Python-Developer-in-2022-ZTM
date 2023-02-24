@@ -1,4 +1,5 @@
 from functools import reduce
+from collections import Counter
 #1
 def combinationSum(candidates: list[int], target: int):
     if len(candidates) == 1:
@@ -11,34 +12,40 @@ def combinationSum(candidates: list[int], target: int):
                 return []
             else:
                 combinations = []
-                for i in range(target // candidates[0]):
+                for _ in range(target // candidates[0]):
                     combinations.append(candidates[0])
                 return [combinations]
     elif len(candidates) > 1:
         candidates[:] = sorted(candidates)
-        combos = []
-        # Case 1: If there's any value that's equal to target
-        if target in candidates:
-            combos.append([target])
-        else:
-            # Case 2: Check if any 2 numbers add to target
-            for i in range(len(candidates) - 1):
-                if candidates[i] + candidates[i+1] == target:
-                    combos.append([candidates[i], candidates[i+1]])
-            # Case 3: If there's a num multiplied by itself n times equals target
-            values = [item for item in candidates if target % item == 0]
-            if len(values) == 1:
-                res = [values[0] for _ in range(target // values[0])]
-                combos.append(res)
-                # If (n x someNumber) + someOtherNumber == target
-                running_sum, remaining = 0, [num for num in candidates if num != res[0]]
-                for j in range(len(remaining)):
-                    start = remaining[j]
-                    for k in range(len(res)):
-                        running_sum += res[k]
-                        if running_sum + start == target:
-                            first = (running_sum // res[0]) * [res[0]]
-                            combos.append(first + [start])
-        return combos
-                
-print(combinationSum([2], 1))
+        combinations = []
+        pairs =[[candidates[i], candidates[i+1]] for i in range(len(candidates) - 1)]
+        if candidates[0] + candidates[-1] == target:
+            combinations.append([candidates[0], candidates[-1]])
+        for pair in pairs:
+            for j in range(len(pair)):
+                if pair[j] == target:
+                    combinations.append([pair[j]])
+                    break
+                if sum(pair) == target:
+                    combinations.append(pair)
+                    break
+                if target % pair[j] == 0:
+                    values = [pair[j] for _ in range(target // pair[j])]
+                    combinations.append(values)
+                    remaining = [item for item in pair if item != values[0]]
+                    multiple_pair_sum = [values[0]] + [remaining[0] for _ in range((target-values[0]) // remaining[0])]
+                    if len(multiple_pair_sum) > 1:
+                        combinations.append(multiple_pair_sum)
+        if len(combinations) == 1:
+            # Check for other possibilities here
+            modified_vals = list(filter(lambda x: target % x != 0, candidates))
+            for value in modified_vals:
+                if (target - value) % 2 == 0:
+                    if (target - value) % modified_vals[0] == 0:
+                        combinations.append([modified_vals[0] for _ in range((target - value) // modified_vals[0])] + [value])
+        nonDuplicates = list(set(tuple(y) for y in combinations))
+        reConverted = [list(val) for val in nonDuplicates]
+        freqFiltered = list(filter(lambda vals: len(list(Counter(vals).values())) > 1,reConverted))
+        return [a for a in reConverted]
+
+print(combinationSum([2,3], 6))
