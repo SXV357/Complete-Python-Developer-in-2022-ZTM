@@ -1,6 +1,10 @@
 from functools import reduce
 from collections import Counter
 #1
+
+# Recursive backtracking problem
+# Original Non-Working solution(Passes all sample test cases for the time being)
+
 def combinationSum(candidates: list[int], target: int):
     if len(candidates) == 1:
         if candidates[0] > target:
@@ -45,7 +49,19 @@ def combinationSum(candidates: list[int], target: int):
                         combinations.append([modified_vals[0] for _ in range((target - value) // modified_vals[0])] + [value])
         nonDuplicates = list(set(tuple(y) for y in combinations))
         reConverted = [list(val) for val in nonDuplicates]
-        freqFiltered = list(filter(lambda vals: len(list(Counter(vals).values())) > 1,reConverted))
-        return [a for a in reConverted]
-
+        counterFiltered = list(filter(lambda i: len(list(Counter(i).values())) > 1, reConverted))
+        filteredFreq = list(list(Counter(x).values()) for x in counterFiltered)
+        nonTarget = []
+        while len(counterFiltered) > 0:
+            for j in range(len(filteredFreq)):
+                count = 0
+                for k in range(len(filteredFreq[j]) - 1):
+                    if filteredFreq[j][k] == filteredFreq[j][k+1]:
+                        count += 1
+                    if count == len(filteredFreq[j]) - 1:
+                        nonTarget.append(counterFiltered[j])
+                        filteredFreq.remove(filteredFreq[j])
+                        break
+        return [value for value in reConverted if value not in nonTarget]
+                    
 print(combinationSum([2,3], 6))
