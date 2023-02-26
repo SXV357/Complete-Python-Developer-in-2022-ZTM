@@ -64,4 +64,67 @@ def combinationSum(candidates: list[int], target: int):
                         break
         return [value for value in reConverted if value not in nonTarget]
                     
-print(combinationSum([2,3], 6))
+#2
+def isStrictlyPalindromic(n: int):
+    res = ''.join(list(bin(n))[2:])
+    if not res == res[::-1]:
+        return False
+    else:
+        pass
+
+#3
+class SubrectangleQueries():
+    def __init__(self, rectangle: list[list[int]]):
+        self.rectangle = rectangle
+
+    def updateSubrectangle(self, row1: int, col1: int, row2: int, col2: int, newValue: int):
+        for r in range(row1, row2 + 1):
+            for c in range(col1, col2 + 1):
+                self.rectangle[r][c] = newValue   
+
+    def getValue(self, row: int, col: int):
+        return self.rectangle[row][col]
+
+#4
+class ParkingSystem():
+    def __init__(self, big: int, medium: int, small: int):
+        self.big = big
+        self.medium = medium
+        self.small = small
+
+    def addCar(self, carType: int):
+        if carType == 1:
+            if self.big >= 1:
+                self.big -= 1
+                return True
+            else:
+                return False
+        elif carType == 2:
+            if self.medium >= 1:
+                self.medium -= 1
+                return True
+            else:
+                return False
+        elif carType == 3:
+            if self.small >= 1:
+                self.small -= 1
+                return True
+            else:
+                return False
+#5
+def leftRigthDifference(nums: list[int]):
+    if len(nums) == 1:
+        return [0]
+    else:
+        l, r = [], []
+        l.append(0)
+        for i in range(1, len(nums)):
+            l.append(sum(nums[0:i]))
+            modifiedRight = nums[1:]
+        for j in range(len(modifiedRight)):
+            r.append(sum(modifiedRight[j:]))
+        r.append(0)
+    res = []
+    for val in range(len(l)):
+        res.append(abs(l[val] - r[val]))
+    return res
