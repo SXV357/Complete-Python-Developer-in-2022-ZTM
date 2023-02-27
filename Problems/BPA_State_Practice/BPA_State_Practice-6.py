@@ -1,5 +1,6 @@
-from functools import reduce
+import itertools
 from collections import Counter
+import math
 #1
 
 # Recursive backtracking problem
@@ -128,3 +129,86 @@ def leftRigthDifference(nums: list[int]):
     for val in range(len(l)):
         res.append(abs(l[val] - r[val]))
     return res
+
+#6
+def minimumSum(num: int):
+    twoSplit = sorted(list(set(list(itertools.permutations(list(map(int, list(str(num)))))))))
+    modified = [list(x) for x in twoSplit]
+    for x in range(len(modified)):
+        for y in range(len(modified[x])):
+            modified[x][y] = str(modified[x][y])
+    pairs = [] # Contains all the possible combinations by splitting num into 2 new numbers
+    for i in range(len(modified)):
+        res = []
+        for j in range(0, len(modified[i]), 2):
+            res.append(int(''.join(modified[i][j:j+2])))
+        pairs.append(res)
+    threeSum = [] # Contains all possible combinations by splitting num into a single digit and another pair of 3 digits
+    for k in range(len(modified)):
+        res2 = []
+        for _ in range(len(modified[k])):
+            res2.append(int(modified[k][0]))
+            res2.append(int(''.join(modified[k][1:])))
+            break
+        threeSum.append(res2)
+    combined = pairs + threeSum
+    return min([sum(val) for val in combined])
+
+#7
+def kidsWithCandies(candies: list[int], extraCandies: int):
+    # Extended Version
+    res = []
+    for i in range(len(candies)):
+        if candies[i] + extraCandies >= max(candies):
+            res.append(True)
+        else:
+            res.append(False)
+    
+    # Shortended Version
+    res2 = [candies[i] + extraCandies >= max(candies) for i in range(len(candies))]
+
+#8
+def interpret(command: str):
+    mappings = {"G": "G", "()": "o", "(al)": "al"}
+    modified = list(command)
+    if len(modified) == 1:
+        return mappings[modified[0]]
+    res = ""
+    for i in range(len(modified) - 1):
+        if modified[i] == "G":
+            res += mappings["G"]
+        elif modified[i] == "a" and modified[i + 1] == "l":
+            res += mappings["(al)"]
+        elif modified[i] == "(" and modified[i + 1] == ")":
+            res += mappings["()"]
+        if i == len(modified) - 2:
+            if modified[i+1] == "G":
+                res += mappings["G"]
+            elif modified[i+1] == "(" and modified[i+2] == ")":
+                res += mappings["()"]
+            elif modified[i+1] == "(" and modified[i+2] == "a":
+                res += mappings["(al)"]
+    return res
+
+#9
+def countPoints(points: list[list[int]], queries: list[list[int]]):
+    res = []
+    for i in range(len(queries)):
+        counter = 0
+        for j in range(len(points)):
+            if math.sqrt(pow(queries[i][1] - points[j][1], 2) + pow(queries[i][0] - points[j][0], 2)) <= queries[i][2]:
+                counter += 1
+        res.append(counter)
+    return res
+
+#10
+def maxIncreaseKeepingSkyline(grid: list[list[int]]):
+        initial = grid[0]
+        for i in range(1, len(grid)):
+            initial += grid[i]
+        # Base case(All values in initial are equal)
+        if len(list(set(initial))) == 1:
+            return 0
+
+print(maxIncreaseKeepingSkyline([[2,2,2],[2,2,2],[2,2,2]]))
+
