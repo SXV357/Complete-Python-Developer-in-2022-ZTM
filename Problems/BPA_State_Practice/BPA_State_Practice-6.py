@@ -202,13 +202,24 @@ def countPoints(points: list[list[int]], queries: list[list[int]]):
     return res
 
 #10
-def maxIncreaseKeepingSkyline(grid: list[list[int]]):
-        initial = grid[0]
-        for i in range(1, len(grid)):
-            initial += grid[i]
-        # Base case(All values in initial are equal)
-        if len(list(set(initial))) == 1:
-            return 0
-
-print(maxIncreaseKeepingSkyline([[2,2,2],[2,2,2],[2,2,2]]))
+def reverse(x: int):
+    modified = list(str(x)[::-1])
+    negative = modified[-1] == "-"
+    if negative: modified.remove("-")
+    if not negative and len(modified) == 1:
+        return int(modified[0])
+    i = 0
+    for i in range(len(modified) - 1):
+        if int(modified[i]) == 0 and i == 0:
+            modified.remove(modified[i])
+        if int(modified[i]) == 0 and i > 0:
+            i -= 1
+        if int(modified[i]) > 1:
+            break
+    if negative:
+        res = -1 * int(''.join(modified))
+        return res if res <= (pow(2, 31) - 1) and res >= pow(-2,31) else 0
+    if int(str(x)[::-1]) > (pow(2, 31) - 1) or int(str(x)[::-1]) < pow(-2, 31):
+        return 0
+    return int(''.join(modified))
 
