@@ -1,3 +1,4 @@
+from random import choice
 #1
 class LongestPalindrome():
     def longestPalindrome1(s: str):
@@ -34,6 +35,7 @@ class LongestPalindrome():
                     isPalindrome = True
             if isPalindrome:
                 break
+        # 2 pointers to sift through the array and check for all possible palindromes in a faster way
         for k in range(1, len(chars)):
             lp, rp = k, len(chars) - 1
             while lp < rp:
@@ -42,6 +44,6 @@ class LongestPalindrome():
                     break
                 else:
                     rp -= 1
-        return max(possible_palindromes, key = lambda val: len(val))    
+        return max(possible_palindromes, key = lambda val: len(val)) if possible_palindromes else choice(chars)   
 
 print(LongestPalindrome.longestPalindrome2("cbbd"))
