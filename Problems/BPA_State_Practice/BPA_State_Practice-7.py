@@ -1,3 +1,4 @@
+from collections import Counter
 from random import choice
 #1
 class LongestPalindrome():
@@ -46,4 +47,40 @@ class LongestPalindrome():
                     rp -= 1
         return max(possible_palindromes, key = lambda val: len(val)) if possible_palindromes else choice(chars)   
 
-print(LongestPalindrome.longestPalindrome2("cbbd"))
+#2
+def convert(s: str, numRows: int):
+    # Base case
+    if numRows == 1:
+        return s
+    if numRows == 2:
+        if len(s) > 1:
+            first, second = "", ""
+            for i in range(0, len(s), 2):
+                first += s[i]
+            for j in range(1, len(s), 2):
+                second += s[j]
+            return first + second
+        else:
+            return s
+    if numRows > 2:
+        # freq = dict(Counter(list(s)))
+        freq = list(s)
+        columns = []
+        for x in range(0, len(s), (numRows + (numRows - 2))):
+            sequence = s[x:x+numRows]
+            columns.append(''.join(sequence))
+        for val in columns:
+            for char in val:
+                freq.remove(char)
+        if numRows == 3:
+           maxLen = max([len(y) for y in columns])
+           modifiedFreq = list(filter(lambda i: len(i) < maxLen, columns))[0]
+           for _ in range(len(modifiedFreq) + 1, maxLen):
+                freqCopy += "*"
+           columns.pop()
+           columns.append(modifiedFreq)
+           return list(zip(*[list(i) for i in columns])) 
+        if numRows > 3:
+            pass
+    
+print(convert("PAYPALISHIRING", 3))
