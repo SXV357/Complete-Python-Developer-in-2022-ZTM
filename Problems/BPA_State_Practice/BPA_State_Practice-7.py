@@ -177,4 +177,32 @@ def compress(chars: list[str]):
     chars[:] = list(s)
     return s
 
-print(compress(["a","a","a","b","b","a","a"]))
+#4
+def lengthOfLongestSubstring(s: str):
+    # Base case
+    counter = 0
+    for k in range(len(s) - 1):
+        if s[k] == s[k+1]:
+            counter += 1
+    if counter == len(s) - 1:
+        return 1
+    if s == "":
+        return 0
+    else:
+        if "\"" in s:
+            s.replace("\"", "")
+        res = []
+        for i in range(len(s)):
+            current = s[i]
+            remaining = s[i+1:]
+            for j in range(len(remaining)):
+                res.append(current + ''.join(remaining[:j+1]))        
+        mappings = {}
+        for val in res:
+            mappings[val] = list(Counter(list(val)).values())
+        filtered = []
+        for k, v in mappings.items():
+            if not any(val > 1 for val in mappings[k]):
+                filtered.append(k)
+        maxLen = max(filtered, key = lambda y: len(y))
+        return len(maxLen)
