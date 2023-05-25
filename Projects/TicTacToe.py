@@ -123,14 +123,12 @@ def check_win(player):
 def restart():
     screen.fill(BG_COLOR)
     draw_lines()
-    player = 1
     for row in range(BOARD_ROWS):
         for col in range(BOARD_COLS):
             board[row][col] = None
 
 draw_lines()
 
-# variables
 player = 1
 game_over = False
 

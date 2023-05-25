@@ -1,8 +1,5 @@
-# build snake game
-
 import pygame
 import random
-import time
 
 pygame.init()
 
