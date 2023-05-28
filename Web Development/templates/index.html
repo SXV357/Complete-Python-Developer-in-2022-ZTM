@@ -3,10 +3,16 @@
 <head>
   <title>Python Web Server</title>
   <link href = "/static/style.css" rel = "stylesheet" type = "text/css">
+  <!--Double curly brackets is interpreted by flask as a python expression that needs to be evaluated-->
   <link rel = "shortcut icon" href = "{{url_for('static', filename = 'favicon.ico')}}">
 </head>
 <body>
-    <h1 style = "color: #000" id = "hello">Hello World</h1>
-    <script src = "/static/script.js"></script>
+    <!-- <h1 style = "color: #000" id = "hello">Hello World</h1> -->
+    {{"Shreyas" + " " + "Viswanathan"}} <br>
+    {{456 ** 92 - 14.59}} <br>
+    {{10 ** 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1}} <br>
+    {{"Username: " + firstName}} <!--Referring to username that is received through URL params-->
+    {{id}}
+    <script src = "/static/script.js" type = "text/javascript"></script>
 </body>
 </html>
