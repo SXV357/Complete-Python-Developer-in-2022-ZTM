@@ -2,16 +2,6 @@ import pprint
 import requests
 from bs4 import BeautifulSoup
 
-# print(soup.title) # everything inside title tag
-# print(soup.body) # everything inside the <body> tag
-# print(soup.body.contents[0]) # returns everything inside the body tag in a list form
-
-# votes = soup.find_all("span", class_ = "titleline")
-# a_tags = soup.find_all("a")
-# for idx, tag in enumerate(a_tags):
-#     print(f'{idx}, {tag}')
-
-
 def gather_data():
     '''
     Fetches data from all the pages of Hacker News and appends the data to two separate lists,

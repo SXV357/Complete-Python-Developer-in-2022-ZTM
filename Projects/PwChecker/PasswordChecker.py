@@ -35,20 +35,9 @@ def main(args):
         count = pwned_api_check(password)
         if count:
             print(
-                f'{password} was found {count} times... You should probably change your password!')
+                f'{password} was found {count} times. Please consider changing your password!')
         else:
-            print(f'{password} was NOT found. Carry on!')
-
-# taking inputs through terminal
-# if __name__ == '__main__':
-#     sys.exit(main(sys.argv[1:]))
-
-# taking inputs through file
-with open(r'C:/Users/14058/OneDrive/Desktop/Programming/Python Stuff/Projects/PwChecker/passwords.txt', 'r') as file:
-    try:
-        passwords = file.read().splitlines()
-    except FileNotFoundError as err:
-        print(f'{err}. Check the file path and try again')
+            print(f'{password} is a strong password. There\'s no need to change it.')
 
 if __name__ == '__main__':
-    main(passwords)
+    sys.exit(main(sys.argv[1:]))
