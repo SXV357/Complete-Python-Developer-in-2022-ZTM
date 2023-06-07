@@ -40,7 +40,6 @@ def display_completed():
             if re.fullmatch(validation, email) and form_data["subject"] != "" and form_data["message"] != "":
                 write_to_csv_file(form_data)
                 return render_template('thankyou.html', message = f'{email[0:email.index("@")]}')
-                # return redirect('/thankyou.html') alternate way of displaying an html page in addition to render_template
         except (ValueError, TypeError):
             error = "The email is either invalid or the subject and/or the message fields are empty. Please try again"
             return render_template('thankyou.html', message = error)
