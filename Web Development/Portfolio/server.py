@@ -11,12 +11,19 @@ def home():
     '''
     return render_template('index.html')
 
-@app.route("/<string:file_name>.html")
+@app.route("/<string:file_name>")
 def display_page(file_name: str = None):
     '''
     Dynamically determines which section to display based on URL params
     '''
-    return render_template(f'{file_name}.html')
+    return render_template(f'{file_name}')
+
+@app.route("/Project-Pages/<string:fName>")
+def display_project_page(fName: str = None):
+    '''
+    For dynamic project-page routing
+    '''
+    return render_template(f'Project-Pages/{fName}')
 
 def write_to_csv_file(form_data: dict):
     '''
